@@ -4,19 +4,25 @@ using UnityEngine;
 
 public class monkeyController : MonoBehaviour {
 	public float speed;
-	public int dir;
+	[HideInInspector] public int dir;
+	[HideInInspector] public bool first;
+	public GameController gameController;
 
 	// Use this for initialization
 	void Start () {
-		GetComponent<Rigidbody2D> ().velocity = new Vector2(speed, 0);
-		dir = 1;
+		first = true;
+		dir = -1;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown (KeyCode.Space)) {
-			GetComponent<Rigidbody2D> ().velocity = new Vector2(speed * dir, 0);
 			dir = -dir;
+			GetComponent<Rigidbody2D> ().velocity = new Vector2(speed * dir, GetComponent<Rigidbody2D> ().velocity.y);
+			if (first) {
+				first = !first;
+				gameController.camera.GetComponent<Camera_down> ().camera_down = true;
+			}
 		}
 	}
 }
