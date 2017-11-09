@@ -18,8 +18,10 @@ public class monkeyController : MonoBehaviour {
 	void Update () {
 		if (Input.GetKeyDown (KeyCode.Space)) {
 			dir = -dir;
+			GetComponent<Animator> ().SetFloat ("play_Speed", dir);
 			GetComponent<Rigidbody2D> ().velocity = new Vector2(speed * dir, GetComponent<Rigidbody2D> ().velocity.y);
 			if (first) {
+				GetComponent<Animator> ().SetTrigger ("start_Rolling");
 				first = !first;
 				gameController.camera.GetComponent<Camera_down> ().camera_down = true;
 			}
