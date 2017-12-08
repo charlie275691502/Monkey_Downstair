@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class monkeyController : MonoBehaviour {
-	public float speed;
+public class MonkeyController : MonoBehaviour {
+	public float init_speed;
+	[HideInInspector] public float add_speed;
 	[HideInInspector] public int dir;
 	[HideInInspector] public bool first;
 	public GameController gameController;
@@ -19,12 +20,16 @@ public class monkeyController : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.Space)) {
 			dir = -dir;
 			GetComponent<Animator> ().SetFloat ("play_Speed", dir);
-			GetComponent<Rigidbody2D> ().velocity = new Vector2(speed * dir, GetComponent<Rigidbody2D> ().velocity.y);
+			GetComponent<Rigidbody2D> ().velocity = new Vector2(Find_Velocity(), GetComponent<Rigidbody2D> ().velocity.y);
 			if (first) {
 				GetComponent<Animator> ().SetTrigger ("start_Rolling");
 				first = !first;
 				gameController.camera.GetComponent<Camera_down> ().camera_down = true;
 			}
 		}
+	}
+
+	float Find_Velocity(){
+		return init_speed * dir + add_speed;
 	}
 }
