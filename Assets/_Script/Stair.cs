@@ -18,7 +18,7 @@ public class Stair : MonoBehaviour {
 		if (coll.gameObject.tag == "Monkey") {
 			switch (stairType) {
 			case StairType.Jump:
-				coll.gameObject.GetComponent<Rigidbody2D> ().AddForce (new Vector3 (0, 200, 0));
+				coll.gameObject.GetComponent<Rigidbody2D> ().AddForce (new Vector3 (0, 300, 0));
 				GetComponent<Animator> ().Play ("jump");
 				break;
 			default:
