@@ -19,19 +19,17 @@ public class Stair : MonoBehaviour {
 		monkeyController = GameObject.Find ("Monkey").transform.Find("Sprite").GetComponent<MonkeyController> ();
 	}
 	
-	void OnCollisionEnter2D(Collision2D coll) {
+	void OnCollisionStay2D(Collision2D coll) {
 		if (coll.gameObject.tag == "Monkey") {
 			switch (stairType) {
 			case StairType.Ice:
 				Destroy (gameObject, 0.1f);
 				break;
 			case StairType.Tomato:
-				Debug.Log ("Loss");
-				GameObject.Find ("GameController").GetComponent<GameController> ().camera.GetComponent<Camera_down> ().camera_down = false;
-				Destroy (monkeyController.gameObject);
+				monkeyController.Loss_Heart (1);
 				break;
 			case StairType.Jump:
-				coll.gameObject.GetComponent<Rigidbody2D> ().AddForce (new Vector3 (0, 300, 0));
+				coll.gameObject.GetComponent<Rigidbody2D> ().AddForce (new Vector3 (0, 150, 0));
 				GetComponent<Animator> ().Play ("jump");
 				break;
 			case StairType.RollLeft:

@@ -3,13 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Bound : MonoBehaviour {
+	public bool break_the_stairs;
 	public  GameController gameController;
 
-	void OnCollisionEnter2D(Collision2D coll) {
+	void OnTriggerEnter2D(Collider2D coll) {
+		Debug.Log (coll.gameObject.tag);
+
+
 		if (coll.gameObject.tag == "Monkey") {
-			Debug.Log ("Loss");
-			gameController.camera.GetComponent<Camera_down> ().camera_down = false;
-			Destroy(coll.gameObject);
+			if(break_the_stairs) coll.gameObject.GetComponent<MonkeyController> ().Loss_Heart (1);
+			else coll.gameObject.GetComponent<MonkeyController> ().Loss_Heart (3);
+		}
+		if (coll.gameObject.tag == "Stairs") {
+			if(break_the_stairs) Destroy (coll.gameObject);
+			else transform.parent.gameObject.GetComponent<Camera_down>().Next_Stairs ();
 		}
 	}
 }
