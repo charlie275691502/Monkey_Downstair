@@ -18,18 +18,15 @@ public class Stair : MonoBehaviour {
 	void Start(){
 		monkeyController = GameObject.Find ("Monkey").transform.Find("Sprite").GetComponent<MonkeyController> ();
 	}
-	
-	void OnCollisionStay2D(Collision2D coll) {
+
+	void OnCollisionEnter2D(Collision2D coll) {
 		if (coll.gameObject.tag == "Monkey") {
 			switch (stairType) {
 			case StairType.Ice:
 				Destroy (gameObject, 0.1f);
 				break;
-			case StairType.Tomato:
-				monkeyController.Loss_Heart (1);
-				break;
 			case StairType.Jump:
-				coll.gameObject.GetComponent<Rigidbody2D> ().AddForce (new Vector3 (0, 150, 0));
+				coll.gameObject.GetComponent<Rigidbody2D> ().AddForce (new Vector3 (0, 250, 0));
 				GetComponent<Animator> ().Play ("jump");
 				break;
 			case StairType.RollLeft:
@@ -37,6 +34,33 @@ public class Stair : MonoBehaviour {
 				break;
 			case StairType.RollRight:
 				monkeyController.add_speed = 3;
+				break;
+			default:
+				break;
+			}
+		}
+	}
+	
+	void OnCollisionStay2D(Collision2D coll) {
+		if (coll.gameObject.tag == "Monkey") {
+			switch (stairType) {
+			case StairType.Tomato:
+				monkeyController.Loss_Heart (1);
+				break;
+			default:
+				break;
+			}
+		}
+	}
+
+	void OnCollisionExit2D(Collision2D coll) {
+		if (coll.gameObject.tag == "Monkey") {
+			switch (stairType) {
+			case StairType.RollLeft:
+				monkeyController.add_speed = 0;
+				break;
+			case StairType.RollRight:
+				monkeyController.add_speed = 0;
 				break;
 			default:
 				break;

@@ -29,17 +29,30 @@ public class MonkeyController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		first = true;
-		dir = -1;
+		dir = 0;
 		lifes = max_lifes;
 		immutable = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown (KeyCode.Space)) {
-			dir = -dir;
-			GetComponent<Animator> ().SetFloat ("play_Speed", dir);
-			GetComponent<Rigidbody2D> ().velocity = new Vector2(Find_Velocity(), GetComponent<Rigidbody2D> ().velocity.y);
+//		if (Input.GetKeyDown (KeyCode.Space)) {
+//			dir = -dir;
+//			GetComponent<Animator> ().SetFloat ("play_Speed", dir);
+//			if (first) {
+//				dir = 1;
+//				GetComponent<Animator> ().SetTrigger ("start_Rolling");
+//				first = !first;
+//				gameController.camera.GetComponent<Camera_down> ().camera_down = true;
+//				gameController.camera.GetComponent<Camera_down> ().Next_Stairs ();
+//			}
+//		}
+//
+//		GetComponent<Rigidbody2D> ().velocity = new Vector2(Find_Velocity(), GetComponent<Rigidbody2D> ().velocity.y);
+
+		dir = 0;
+		if (Input.GetKey (KeyCode.LeftArrow)) {
+			dir = -1;
 			if (first) {
 				GetComponent<Animator> ().SetTrigger ("start_Rolling");
 				first = !first;
@@ -47,6 +60,18 @@ public class MonkeyController : MonoBehaviour {
 				gameController.camera.GetComponent<Camera_down> ().Next_Stairs ();
 			}
 		}
+		if (Input.GetKey (KeyCode.RightArrow)) {
+			dir = 1;
+			if (first) {
+				GetComponent<Animator> ().SetTrigger ("start_Rolling");
+				first = !first;
+				gameController.camera.GetComponent<Camera_down> ().camera_down = true;
+				gameController.camera.GetComponent<Camera_down> ().Next_Stairs ();
+			}
+		}
+
+		GetComponent<Animator> ().SetFloat ("play_Speed", dir);
+		GetComponent<Rigidbody2D> ().velocity = new Vector2(Find_Velocity(), GetComponent<Rigidbody2D> ().velocity.y);
 	}
 
 	float Find_Velocity(){

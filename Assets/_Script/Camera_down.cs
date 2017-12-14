@@ -20,6 +20,7 @@ public class Camera_down : MonoBehaviour {
 			numbers_sr[1].sprite = numbers[tmp / 100]; tmp %= 100;
 			numbers_sr[2].sprite = numbers[tmp / 10]; tmp %= 10;
 			numbers_sr[3].sprite = numbers[tmp / 1]; tmp %= 1;
+			speed = 0.7f + deep * 0.005f;
 		}
 	}
 
