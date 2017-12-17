@@ -6,6 +6,7 @@ public enum StairType{
 	Basic,
 	Ice,
 	Tomato,
+	MovingTomato,
 	Jump,
 	RollLeft,
 	RollRight
@@ -14,9 +15,22 @@ public enum StairType{
 public class Stair : MonoBehaviour {
 	public StairType stairType;
 	[HideInInspector] public MonkeyController monkeyController;
+	private Vector3 init_pos;
+	private float swip = 0.5f;
+	private float speed = 1.0f;
 
 	void Start(){
+		init_pos = transform.position;
 		monkeyController = GameObject.Find ("Monkey").transform.Find("Sprite").GetComponent<MonkeyController> ();
+	}
+
+	float time = 0.0f;
+	void Update(){
+		if (stairType == StairType.MovingTomato) {
+			time += Time.deltaTime;
+			float x = Mathf.Sin (time * speed) * swip;
+			transform.position = init_pos + new Vector3 (x, 0, 0);
+		}
 	}
 
 	void OnCollisionEnter2D(Collision2D coll) {
@@ -45,6 +59,9 @@ public class Stair : MonoBehaviour {
 		if (coll.gameObject.tag == "Monkey") {
 			switch (stairType) {
 			case StairType.Tomato:
+				monkeyController.Loss_Heart (1);
+				break;
+			case StairType.MovingTomato:
 				monkeyController.Loss_Heart (1);
 				break;
 			default:

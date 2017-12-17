@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MonkeyController : MonoBehaviour {
 	public float init_speed;
@@ -82,12 +83,16 @@ public class MonkeyController : MonoBehaviour {
 		if (immutable) return;
 		lifes -= x;
 		if (lifes <= 0) {
-			Debug.Log ("Loss");
 			gameController.camera.GetComponent<Camera_down> ().camera_down = false;
-			Destroy (gameObject.transform.parent.gameObject);
+			GetComponent<SpriteRenderer> ().enabled = false;
+			gameController.Start_Dialog (Died, "Loss", "Click to replay", 1);
 		} else {
 			StartCoroutine (Immutable ());
 		}
+	}
+
+	public void Died(bool option){
+		SceneManager.LoadScene (0);
 	}
 
 	public IEnumerator Immutable(){

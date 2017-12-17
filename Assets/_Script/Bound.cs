@@ -7,9 +7,6 @@ public class Bound : MonoBehaviour {
 	public  GameController gameController;
 
 	void OnTriggerEnter2D(Collider2D coll) {
-		Debug.Log (coll.gameObject.tag);
-
-
 		if (coll.gameObject.tag == "Monkey") {
 			if(break_the_stairs) coll.gameObject.GetComponent<MonkeyController> ().Loss_Heart (1);
 			else coll.gameObject.GetComponent<MonkeyController> ().Loss_Heart (3);

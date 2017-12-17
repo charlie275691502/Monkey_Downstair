@@ -20,7 +20,9 @@ public class Camera_down : MonoBehaviour {
 			numbers_sr[1].sprite = numbers[tmp / 100]; tmp %= 100;
 			numbers_sr[2].sprite = numbers[tmp / 10]; tmp %= 10;
 			numbers_sr[3].sprite = numbers[tmp / 1]; tmp %= 1;
-			speed = 0.7f + deep * 0.005f;
+			speed = 0.7f + deep * 0.1f;
+			if (speed >= 4.0f)
+				speed = 4.0f;
 		}
 	}
 
@@ -40,8 +42,6 @@ public class Camera_down : MonoBehaviour {
 	void Update () {
 		if (camera_down) {
 			transform.position -= new Vector3 (0, speed, 0) * Time.deltaTime;
-			deep += speed * Time.deltaTime * 10;
-
 		}
 	}
 
@@ -55,6 +55,7 @@ public class Camera_down : MonoBehaviour {
 	}
 
 	public void Next_Stairs(){
+		deep += 1;
 		d -= Random.Range (random_stairs_distance.x, random_stairs_distance.y);
 		Instantiate (stairs [Random.Range (0, stairs.Length)], new Vector3 (Random.Range (random_x.x, random_x.y), d, 0), Quaternion.identity, stairs_folder);
 	}
